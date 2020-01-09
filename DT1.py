@@ -1,11 +1,17 @@
 import csv
 
 import pandas as pd
+import random
 import sklearn
 from dask.dot import graphviz
 import graphviz
+from dask.tests.test_base import np
 from sklearn import tree
 from nltk import DecisionTreeClassifier
+
+def flip_coin(p: float):
+    return True if random.uniform(0, 1) <= p else False
+
 
 if __name__ == '__main__':
     with open("train.csv", "r") as f:
@@ -30,6 +36,52 @@ if __name__ == '__main__':
             # print(sklearn.metrics.confusion_matrix(Y_true, y_pred))
             tn, fp, fn, tp = sklearn.metrics.confusion_matrix(Y_true, y_pred).ravel()
             print('[', [tp, fp], '\n', [fn, tn], ']')
+
+            print(4*fn+fp)
+            tn_2 = tn
+            fn_2 = fn
+            fp_2 = fp
+            tp_2 = tp
+            for i in range(tn):
+                if flip_coin(0.05):
+                    tn_2 -= 1
+                    fp_2 += 1
+            for i in range(fn):
+                if flip_coin(0.05):
+                    fn_2 -= 1
+                    tp_2 += 1
+            print(4*fn_2+fp_2)
+
+            tn_2 = tn
+            fn_2 = fn
+            fp_2 = fp
+            tp_2 = tp
+            for i in range(tn):
+                if flip_coin(0.1):
+                    tn_2 -= 1
+                    fp_2 += 1
+            for i in range(fn):
+                if flip_coin(0.1):
+                    fn_2 -= 1
+                    tp_2 += 1
+            print(4*fn_2+fp_2)
+
+            tn_2 = tn
+            fn_2 = fn
+            fp_2 = fp
+            tp_2 = tp
+            for i in range(tn):
+                if flip_coin(0.2):
+                    tn_2 -= 1
+                    fp_2 += 1
+            for i in range(fn):
+                if flip_coin(0.2):
+                    fn_2 -= 1
+                    tp_2 += 1
+            print(4 * fn_2 + fp_2)
+
+
+
 
             # 3
             dt_3 = tree.DecisionTreeClassifier(criterion='entropy', min_samples_split=3)
@@ -68,4 +120,4 @@ if __name__ == '__main__':
 
             print(tree.plot_tree(dt_27))
 
-            print(sum( k for k in Y_train))
+
