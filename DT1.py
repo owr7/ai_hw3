@@ -80,9 +80,6 @@ if __name__ == '__main__':
                     tp_2 += 1
             print(4 * fn_2 + fp_2)
 
-
-
-
             # 3
             dt_3 = tree.DecisionTreeClassifier(criterion='entropy', min_samples_split=3)
             dt_3 = dt_3.fit(X_train, Y_train)
