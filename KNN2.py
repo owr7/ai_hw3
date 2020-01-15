@@ -47,8 +47,8 @@ if __name__ == '__main__':
                 distance_list.sort(key=lambda x: x[0])
                 #print(sum(i[1] for i in distance_list))
                 result = 0
-                k = 9
-                if sum(s[1] for s in distance_list[:k]) > k/2:
+                k = 27
+                if sum(s[1] for s in distance_list[:k])*4 > k/2:
                     result = 1
                 if result == Y_true[i]:
                     if result == 1:

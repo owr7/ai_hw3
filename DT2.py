@@ -23,7 +23,7 @@ if __name__ == '__main__':
         minus = sum(1 for x, y in zip(X_train, Y_train) if y == 0)
         delta = plus/(plus+minus)
 
-        dt = tree.DecisionTreeClassifier(criterion='entropy', min_samples_split=9, class_weight={0: delta, 1: 1-delta})
+        dt = tree.DecisionTreeClassifier(criterion='entropy', min_samples_split=9, class_weight='balanced')#{0: delta, 1: 1-delta})
 
 
         dt = dt.fit(X_train, Y_train)
