@@ -2,6 +2,14 @@ import csv
 import math
 from typing import List
 
+import pandas as pd
+import random
+import sklearn
+from dask.dot import graphviz
+import graphviz
+from dask.tests.test_base import np
+from sklearn import tree
+from nltk import DecisionTreeClassifier
 
 def distance(train: List, test: List):
     return math.sqrt(sum((a-b)*(a-b) for a, b in zip(train, test)))
@@ -42,14 +50,16 @@ if __name__ == '__main__':
                     test[i] = test[i] / (max_[i] - min_[i])
 
             tp = tn = fp = fn = 0
+            y_pred = []
             for i, test in enumerate(X_test):
                 distance_list = [(distance(train, test), Y_train[i]) for i, train in enumerate(X_train)]
                 distance_list.sort(key=lambda x: x[0])
                 #print(sum(i[1] for i in distance_list))
                 result = 0
-                k = 27
+                k = 9
                 if sum(s[1] for s in distance_list[:k])*4 > k/2:
                     result = 1
+                y_pred.append(result)
                 if result == Y_true[i]:
                     if result == 1:
                         tp += 1
@@ -61,4 +71,5 @@ if __name__ == '__main__':
                         fp += 1
                     elif result == 0:
                         fn += 1
-            print([tp, fp], '\n', [fn, tn])
+            print(sklearn.metrics.confusion_matrix(Y_true, y_pred))
+            #print([tp, fp], '\n', [fn, tn])

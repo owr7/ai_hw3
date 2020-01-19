@@ -82,5 +82,5 @@ if __name__ == '__main__':
                 if accu > max_accu:
                     max_accu = accu
                     best_set = f
-            print(best_set)
+            print(list(best_set))
 

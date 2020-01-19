@@ -34,9 +34,12 @@ if __name__ == '__main__':
                     Y_true.append(float(line[8]))
             y_pred = dt.predict(X_test)
             # print(sklearn.metrics.confusion_matrix(Y_true, y_pred))
-            tn, fp, fn, tp = sklearn.metrics.confusion_matrix(Y_true, y_pred).ravel()
-            print('[', [tp, fp], '\n', [fn, tn], ']')
+            #tn, fp, fn, tp = sklearn.metrics.confusion_matrix(Y_true, y_pred).ravel()
+            #print('[', [tp, fp], '\n', [fn, tn], ']')
+            print(sklearn.metrics.confusion_matrix(Y_true, y_pred))
 
+"""
+# code used for question 9 to create the graph 
             print(4*fn+fp)
             tn_2 = tn
             fn_2 = fn
@@ -80,6 +83,9 @@ if __name__ == '__main__':
                     tp_2 += 1
             print(4 * fn_2 + fp_2)
 
+
+# this code used to create to graphs for cut tree
+
             # 3
             dt_3 = tree.DecisionTreeClassifier(criterion='entropy', min_samples_split=3)
             dt_3 = dt_3.fit(X_train, Y_train)
@@ -116,5 +122,4 @@ if __name__ == '__main__':
             graph
 
             print(tree.plot_tree(dt_27))
-
-
+            """

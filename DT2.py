@@ -21,11 +21,17 @@ if __name__ == '__main__':
                 Y_train.append(float(line[8]))
         plus = sum(1 for x, y in zip(X_train, Y_train) if y == 1)
         minus = sum(1 for x, y in zip(X_train, Y_train) if y == 0)
-        delta = plus/(plus+minus)
+        delta = minus/(plus+minus)
 
-        dt = tree.DecisionTreeClassifier(criterion='entropy', min_samples_split=9, class_weight='balanced')#{0: delta, 1: 1-delta})
-
-
+        dt = tree.DecisionTreeClassifier(criterion='entropy', min_samples_split=9, class_weight={0: 1-delta, 1: delta})
+        #'balanced'
+        alpha = minus/plus
+        list_alpha = []
+        """for i in Y_train:
+            if i == 1:
+                list_alpha.append(alpha)
+            else:
+                list_alpha.append(1)"""
         dt = dt.fit(X_train, Y_train)
         with open("test.csv", "r") as f_2:
             reader_2 = csv.reader(f_2)
@@ -37,5 +43,6 @@ if __name__ == '__main__':
                     Y_true.append(float(line[8]))
             y_pred = dt.predict(X_test)
             # print(sklearn.metrics.confusion_matrix(Y_true, y_pred))
-            tn, fp, fn, tp = sklearn.metrics.confusion_matrix(Y_true, y_pred).ravel()
-            print('[', [tp, fp], '\n', [fn, tn], ']')
+            #tn, fp, fn, tp = sklearn.metrics.confusion_matrix(Y_true, y_pred).ravel()
+            #print('[', [tp, fp], '\n', [fn, tn], ']')
+            print(sklearn.metrics.confusion_matrix(Y_true, y_pred))
